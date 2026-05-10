@@ -1,6 +1,6 @@
 # 服务器工作环境配置 & Linux 常用命令速查
 
-> 适用环境:Ubuntu Server(本机为 `Ubuntu4EDA1`),登录用户 `liuxiaolong`
+> 适用环境:Ubuntu Server(本机为 `Ubuntu4EDA1`),登录用户 xxx
 > 本文档涵盖:工作目录规划、Claude Code 用户级安装、常用 Linux 命令(带参数说明)
 
 ---
