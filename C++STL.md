@@ -1818,16 +1818,16 @@ tie(one, two, three) = t;
 cout << one two three << "\n"; 1hahaha3
 ```
 
-STL函数
+## STL函数
 
 <!-- Page 33 -->
-accumulate
+### accumulate
 
 ```cpp
 accumulate(beg, end, init)
 ```
 
-复杂度：
+复杂度：O(N)
 
 作用：对一个序列的元素求和
 
@@ -1835,7 +1835,7 @@ init为对序列元素求和的初始值
 
 返回值类型：与 init 相同
 
-基础累加求和：
+- 基础累加求和：
 
 ```cpp
 int a[] = {1, 3, 5, 9, 10};
@@ -1845,7 +1845,7 @@ int res1 = accumulate(a, a + 3, 0);
 int res2 = accumulate(a, a + 4, 5);
 ```
 
-自定义二元对象求和：
+- 自定义二元对象求和：
 
 使用lambda表达式
 
@@ -1863,7 +1863,7 @@ ll res = accumulate(st + 1, st + 4, 1ll, [](ll a, node b) {
 });
 ```
 
-atoi
+### atoi
 
 ```cpp
 atoi(const char *)
@@ -1894,13 +1894,13 @@ int a = atoi(s);
 cout << a << "\n";
 ```
 
-fill
+### fill
 
 ```cpp
 fll(beg, end, num)
 ```
 
-复杂度：
+复杂度：O(N)
 
 对一个序列进行初始化赋值
 
@@ -1919,13 +1919,13 @@ memset()是按字节进行赋值，对于初始化赋 0或 -1有比较好的效�
 
 如果赋某个特定的数会出错，赋值特定的数建议使用 fll()
 
-is_sorted
+### is_sorted
 
 ```cpp
 is_sorted(beg, end)
 ```
 
-复杂度：
+复杂度：O(N)
 
 判断序列是否有序（升序），返回 bool值
 
@@ -1935,7 +1935,7 @@ if (is_sorted(a, a + n))
     cout << "YES\n";
 ```
 
-iota
+### iota
 
 ```cpp
 iota(beg, end)
@@ -1952,9 +1952,9 @@ for (auto i : a)
 0 1 2 3 4 5 6 7 8 9
 ```
 
-lower_bound + upper_bound
+### lower_bound + upper_bound
 
-复杂度：
+复杂度：O(logN)
 
 作用：二分查找
 
@@ -1966,9 +1966,9 @@ upper_bound(a, a + n, x);
 //如果未找到，返回尾地址的下一个位置的地址
 ```
 
-max_element+min_element
+### max_element+min_element
 
-复杂度：
+复杂度：O(N)
 
 找最大最小值
 
@@ -1978,9 +1978,9 @@ int mx = *max_element(a, a + n);
 int mn = *min_element(a, a + n);
 ```
 
-max+min
+### max+min
 
-复杂度：
+复杂度：O(1)
 
 找多个元素的最大值和最小值
 
@@ -2000,7 +2000,7 @@ minmax
 minmax(a, b)
 ```
 
-复杂度：
+复杂度：O(1)
 
 返回一个 pair类型，第一个元素是 min(a, b)， 第二个元素是 max(a, b)
 
@@ -2009,13 +2009,13 @@ pair < int, int > t = minmax(4, 2);
 t.first = 2, t.second = 4
 ```
 
-minmax_element
+### minmax_element
 
 ```cpp
 minmax_element(beg, end)
 ```
 
-复杂度：
+复杂度：O(N)
 
 返回序列中的最小和最大值组成pair的对应的地址，返回类型为 pair<vector<int>::iterator, vector<int>::iterator>
 
@@ -2027,13 +2027,13 @@ auto t = minmax_element(a.begin() //, a.end()); // 返回的是最小值和最�
 t.first = 1, t.second = 10 输出对应最小最大值时需要使用指针
 ```
 
-nth_element
+### nth_element
 
 ```cpp
 nth_element(beg, nth, end)
 ```
 
-复杂度： 平均
+复杂度： 平均O(N)
 
 寻找第序列第n小的值
 
@@ -2048,7 +2048,7 @@ nth_element(a, a + 2, a + n);
 cout << a[2] '\n';
 ```
 
-next_permutation
+### next_permutation
 
 <!-- Page 37 -->
 
@@ -2056,7 +2056,7 @@ next_permutation
 next_permutation(beg, end)
 ```
 
-复杂度：
+复杂度：O(N)
 
 求序列的下一个排列，下一个排列是字典序大一号的排列
 
@@ -2084,17 +2084,17 @@ do {
 } while (next_permutation(a, a + n));
 ```
 
-prev_permutation(beg, end)
+- prev_permutation(beg, end)
 
 求出前一个排列，如果序列为最小的排列，将其重排为最大的排列，返回false
 
-partial_sort
+### partial_sort
 
 ```cpp
 partial_sort(beg, mid, end)
 ```
 
-复杂度： 大概 M为距离
+复杂度： 大概O(NlogN)M为距离
 
 部分排序,排序mid-beg个元素，mid为要排序区间元素的尾后的一个位置
 
@@ -2128,13 +2128,13 @@ for (int i = 0; i < 10; i++)
 //前五个元素降序有序
 ```
 
-random_shuffle
+### random_shuffle
 
-复杂度：
+复杂度：O(N)
 
-## 1 随机打乱序列的顺序
+1 随机打乱序列的顺序
 
-## 2 random_shuffle  在        C++14        中被弃用，在     C++17        中被废除，C++11之后应尽量使用              shuffle来代替。
+2 random_shuffle  在        C++14        中被弃用，在     C++17        中被废除，C++11之后应尽量使用              shuffle来代替。
 
 ```cpp
 vector<int> b(n);
@@ -2145,13 +2145,13 @@ random_shuffle(a, a + n);
 shuffle(b.begin(), b.end());
 ```
 
-reverse
+### reverse
 
 ```cpp
 reverse(beg, end)
 ```
 
-复杂度：
+复杂度：O(N)
 
 对序列进行翻转
 
@@ -2165,9 +2165,9 @@ reverse(a, a + 4);
 cout << a[0] a[1] a[2] a[3];4321
 ```
 
-set_union, set_intersection,set_difference
+### set_union, set_intersection,set_difference
 
-复杂度：
+复杂度：O(N+M)
 
 求两个集合的并集，交集，差集。手动实现双指针就可以搞定，嫌麻烦可以使用该函数。
 
@@ -2191,9 +2191,9 @@ set_intersection(a.begin(), a.end(), b.begin(), b.end(), inserter(d, d.begin()))
 set_difference(a.begin(), a.end(), b.begin(), b.end(), inserter(e, e.begin()));
 ```
 
-sort
+### sort
 
-复杂度：
+复杂度：O(NlogN)
 
 作用：对一个序列进行排序
 
@@ -2205,7 +2205,7 @@ sort(beg, end, cmp);
 
 几种排序的常见操作：
 
-操作一：对数组正常升序排序
+- 操作一：对数组正常升序排序
 
 ```cpp
 int a[N]; // 普通数组定义
@@ -2215,7 +2215,7 @@ vector<int> b(n + 1) //; // vector数组定义
 sort(b.begin() + 1, b.end());
 ```
 
-操作二：使用第三个参数，进行降序排序
+- 操作二：使用第三个参数，进行降序排序
 
 ```cpp
 //对a数组的[0, n-1]位置从大到小排序
@@ -2227,14 +2227,14 @@ sort(b.begin() // + 1, b.end()); // 升序
 sort(b.begin() // + 1, b.end(), greater < int>()); // 降序
 ```
 
-操作三：另外一种降序排序方法，针对 vector
+- 操作三：另外一种降序排序方法，针对 vector
 
 ```cpp
 vector<int> a(n);
 sort(a.rbegin() //, a.rend()); // 使用反向迭代器进行降序排序
 ```
 
-操作四：自定义排序规则
+- 操作四：自定义排序规则
 
 <!-- Page 40 -->
 
@@ -2251,9 +2251,9 @@ sort(node, node + n, [](node a, node b) {
 });
 ```
 
-stable_sort
+### stable_sort
 
-复杂度：
+复杂度：O(NlogN)
 
 功能和 sort() 基本一样
 
@@ -2261,7 +2261,7 @@ stable_sort
 
 使用用法和 sort()一样，见上
 
-stoi
+### stoi
 
 ```cpp
 stoi(const string*)
@@ -2281,9 +2281,9 @@ int a = atoi(s);
 cout << a << "\n"; 1234
 ```
 
-transform
+### transform
 
-复杂度：
+复杂度：O(N)
 
 作用：使用给定操作，将结果写到dest中
 
@@ -2302,7 +2302,7 @@ transform(beg, end, dest, tolower);
 transform(beg, end, dest, toupper);
 ```
 
-to_string
+### to_string
 
 将数字转化为字符串，支持小数（double）
 
@@ -2311,7 +2311,7 @@ int a = 12345678;
 cout << to_string(a) '\n';
 ```
 
-unique
+### unique
 
 ```cpp
 unique(beg, end)
@@ -2330,7 +2330,7 @@ unique 之后 a 数组为 {1, 2, 3, 6, 3}前面为无重复元素的数组，后
 
 应用：离散化
 
-方法一：利用数组离散化
+- 方法一：利用数组离散化
 
 ```cpp
 for (int i = 0; i < n; i++) {
@@ -2348,7 +2348,7 @@ for (int i = 0; i < n; i++) {
 }
 ```
 
-方法二：利用 vector 进行离散化
+- 方法二：利用 vector 进行离散化
 
 <!-- Page 42 -->
 
@@ -2365,7 +2365,7 @@ for (int i = 0; i < n; i) {
 }
 ```
 
-__gcd
+### __gcd
 
 ```cpp
 gcd(a, b)
@@ -2377,23 +2377,20 @@ gcd(12,15) = 3
 
 gcd(21,0) = 21
 
-__lg
+### __lg
 
 ```cpp
 lg(a)
 ```
-
-## 1 求一个数二进制下最高位位于第几位（从第0位  开始）（或二进制数下有几位）
-
-## 2 lg(x)  相当于返回
-
-## 3 复杂度
+1. 求一个数二进制下最高位位于第几位（从第0位  开始）（或二进制数下有几位）
+2.  lg(x)  相当于返回$\lfloor x \rfloor$
+3. 复杂度O(1)
 
 lg(8) = 3
 
 lg(15) = 3
 
-_builtin 内置位运算函数
+### _builtin 内置位运算函数
 
 需要注意：内置函数有相应的 unsigned lnt和 unsigned long long版本， unsigned long long只需要在函数名后面加
 上 ll就可以了，比如 __builtin_clzll(x) ，默认是32位 unsigned int
@@ -2401,7 +2398,7 @@ _builtin 内置位运算函数
 很多题目和 long long 数据类型有关，如有需要注意添加 ll
 
 <!-- Page 43 -->
-__builtin_ffs
+### __builtin_ffs
 
 ```cpp
 __builtin_ffs(x)
@@ -2409,7 +2406,7 @@ __builtin_ffs(x)
 
 二进制中对应最后一位 1的位数，比如 4会返回 3（100）
 
-__builtin_popcount
+### __builtin_popcount
 
 ```cpp
 __builtin_popcount(x)
@@ -2417,7 +2414,7 @@ __builtin_popcount(x)
 
 x中 1的个数
 
-__builtin_ctz
+### __builtin_ctz
 
 ```cpp
 __builtin_ctz(x)
@@ -2425,7 +2422,7 @@ __builtin_ctz(x)
 
 x末尾 0的个数（ count tail zero）
 
-__builtin_clz
+### __builtin_clz
 
 ```cpp
 __builtin_clz(x)
@@ -2438,7 +2435,7 @@ cout << __builtin_clz(32); 26
 //因为共有6位, 默认数据范围为32位，32 - 6 = 26
 ```
 
-__builtin_parity
+### __builtin_parity
 
 ```cpp
 __builtin_parity(x)
