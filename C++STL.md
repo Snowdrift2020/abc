@@ -109,8 +109,8 @@ vector<node> c; // 定义了一个名为c的一维数组，数组存储结构体
 指定长度和初始值的初始化
 
 ```cpp
-vector<int> v(n) //; // 定义一个长度为n的数组，初始值默认为0，下标范围[0, n - 1]
-vector<int> v(n, 1) //; // v[0] 到 v[n - 1]所有的元素初始值均为1
+vector<int> v(n); // 定义一个长度为n的数组，初始值默认为0，下标范围[0, n - 1]
+vector<int> v(n, 1); // v[0] 到 v[n - 1]所有的元素初始值均为1
 //注意：指定数组长度之后（指定长度后的数组就相当于正常的数组了）
 ```
 
@@ -126,7 +126,7 @@ vector<int> a{1, 2, 3, 4, 5}; // 数组a中有五个元素，数组长度就为5
 
 ```cpp
 vector<int> a(n + 1, 0);
-vector<int> b(a) //; // 两个数组中的类型必须相同, a和b都是长度为n+1，初始值都为0的数组
+vector<int> b(a); // 两个数组中的类型必须相同, a和b都是长度为n+1，初始值都为0的数组
 vector<int> c = a; // 也是拷贝初始化, c和a是完全一样的数组
 ```
 
@@ -151,7 +151,7 @@ v[2].push_back(3);
 
 ```cpp
 //初始化二维均可变长数组
-vector < vector < int v; // 定义一个行和列均可变的二维数组
+vector<vector<int>> v; // 定义一个行和列均可变的二维数组
 ```
 
 应用：可以在 v数组里面装多个数组
@@ -161,13 +161,13 @@ vector<int> t1{1, 2, 3, 4};
 vector<int> t2{2, 3, 4, 5};
 v.push_back(t1);
 v.push_back(t2);
-v.push_back({3, 4, 5, 6}) // {3, 4, 5, 6}可以作为vector的初始化, 相当于一个无名vector
+v.push_back({3, 4, 5, 6}); // {3, 4, 5, 6}可以作为vector的初始化, 相当于一个无名vector
 ```
 
 行列长度均固定 n + 1行 m + 1列初始值为0
 
 ```cpp
-vector < vector < int a(n + 1, vector<int>(m + 1, 0));
+vector<vector<int>> a(n + 1, vector<int>(m + 1, 0));
 ```
 
 c++17或者c++20支持的形式（不常用），与上面相同的初始化
@@ -209,7 +209,7 @@ sort()为STL函数，请参考本文最后面STL函数系列。
 
 ```cpp
 vector<int> a(n + 1);
-sort(a.begin() // + 1, a.end()); // 对[1, n]区间进行从小到大排序
+sort(a.begin() + 1, a.end()); // 对[1, n]区间进行从小到大排序
 ```
 
 ### 1.3 访问
@@ -224,7 +224,7 @@ sort(a.begin() // + 1, a.end()); // 对[1, n]区间进行从小到大排序
 
 ```cpp
 vector<int> vi; // //定义一个vi数组
-vector<int>::iterator it = vi.begin() //; // //声明一个迭代器指向vi的初始位置
+vector<int>::iterator it = vi.begin(); // 声明一个迭代器指向vi的初始位置
 ```
 
 使用auto ：非常简便，但是会访问数组的所有元素（特别注意0位置元素也会访问到）
@@ -346,9 +346,9 @@ stack<node> s; // node是结构体类型
 
 ```cpp
 stack<int> st;
-for (int i = 0; i < 10; i) st.push(i);
+for (int i = 0; i < 10; i++) st.push(i);
 while (!st.empty()) {
-    int tp = st.top() //; // 栈顶元素
+    int tp = st.top(); // 栈顶元素
     st.pop();
 }
 ```
@@ -364,7 +364,7 @@ while (!st.empty()) {
 ```cpp
 int s[100]; // 栈 从左至右为栈底到栈顶
 int tt = -1; // tt 代表栈顶指针, 初始栈内无元素，tt为-1
-for (int i = 0; i < 5; i) {
+for (int i = 0; i < 5; i++) {
     //入栈
     s[++tt] = i;
 }
@@ -471,10 +471,10 @@ deque可以进行排序
 
 ```cpp
 //从小到大
-sort(q.begin(), q.end())
+sort(q.begin(), q.end());
 //从大到小排序
-sort(q.begin() //, q.end(), greater < int>()); // deque里面的类型需要是int型
-sort(q.begin() //, q.end(), greater()); // 高版本C++才可以用
+sort(q.begin(), q.end(), greater<int>()); // deque里面的类型需要是int型
+sort(q.begin(), q.end(), greater()); // C++14及以上可以用
 ```
 
 ## 5 priority_queue
@@ -578,10 +578,11 @@ struct Point {
 ```cpp
 //定义的比较结构体
 //注意：cmp是个结构体
-struct cmp {自定义堆的排序规则
-bool operator()(const Point& a, const Point& b) {
-    return a.x < b.x;
-}
+struct cmp {
+    // 自定义堆的排序规则
+    bool operator()(const Point& a, const Point& b) const {
+        return a.x < b.x;
+    }
 };
 //初始化定义，
 priority_queue<Point, vector<Point>, cmp> q; // x大的在堆顶
@@ -600,9 +601,9 @@ priority_queue<Point, vector<Point>, cmp> q; // x大的在堆顶
 ```cpp
 struct node {
     int x, y;
-    friend bool operator <(Point a, Point b) // {//为两个结构体参数，结构体调用一定要写上friend
-    return a.x < b.x; // 按x从小到大排，x大的在堆顶
-}
+    friend bool operator <(const node& a, const node& b) {
+        return a.x < b.x; // x大的在堆顶
+    }
 };
 ```
 
@@ -611,16 +612,16 @@ struct node {
 ```cpp
 struct node {
     int x, y;
-    bool operator <(const Point &a) // const {直接传入一个参数，不必要写friend
-    return x < a.x; // 按x升序排列，x大的在堆顶
-}
+    bool operator <(const node &a) const {
+        return x < a.x; // x大的在堆顶
+    }
 };
 ```
 
 优先队列的定义
 
 ```cpp
-priority_queue<Point> q;
+priority_queue<node> q;
 ```
 
 注意： 优先队列自定义排序规则和 sort()函数定义 cmp函数很相似，但是最后返回的情况是相反的。即相同的符号，最后定义的排
@@ -649,7 +650,7 @@ int main() {
     q.push({7, 9});
     q.push(make_pair(8, 7));
     while (!q.empty()) {
-        cout << q.top().first << " " q.top().second << "\n";
+        cout << q.top().first << " " << q.top().second << "\n";
         q.pop();
     }
     return 0;
@@ -733,8 +734,8 @@ mp[1] = 2;
 mp[2] = 3;
 mp[3] = 4;
 auto it = mp.begin();
-while (it++ mp.end()) {
-    cout << itfirst << " " << itsecond << "\n";
+while (it != mp.end()) {
+    cout << it->first << " " << it->second << "\n";
     it++;
 }
 ```
@@ -757,8 +758,8 @@ mp[1] = 2;
 mp[2] = 3;
 mp[3] = 4;
 auto it = mp.rbegin();
-while (it++ mp.rend()) {
-    cout << itfirst << " " << itsecond << "\n";
+while (it != mp.rend()) {
+    cout << it->first << " " << it->second << "\n";
     it++;
 }
 ```
@@ -842,12 +843,12 @@ cout << mp["菜哇菜"] << "\n"; // 只是简写的一个例子，程序并不�
 
 ```cpp
 map<string, string>::iterator it;
-for (it = mp.begin(); it++ mp.end(); it++) {
+for (it = mp.begin(); it != mp.end(); it++) {
     //键 值
-    //it是结构体指针访问所以要用 访问
-    cout << itfirst << " " << itsecond << "\n";
+    //it是结构体指针访问所以要用 -> 访问
+    cout << it->first << " " << it->second << "\n";
     //it是结构体变量 访问要用 . 访问
-    cout(*it).first" "(*it).second;
+    cout << (*it).first << " " << (*it).second;
 }
 ```
 
@@ -862,7 +863,8 @@ for (auto i : mp)
 
 ```cpp
 map<char, int>::iterator it = mp.find('a');
-cout << it << first << " " itsecond << "\n";
+if (it != mp.end())
+    cout << it->first << " " << it->second << "\n";
 ```
 
 方式四：c++17特性才具有
@@ -871,7 +873,7 @@ cout << it << first << " " itsecond << "\n";
 
 ```cpp
 for (auto [x, y] : mp)
-    cout << x << " " y << "\n";
+    cout << x << " " << y << "\n";
 //x, y对应键和值
 ```
 
@@ -914,7 +916,7 @@ unordered_map：
 //以 map 为例
 map<int, int> mp;
 int x = 999999999;
-if (mp.count(x) // ) 此处判断是否存在x这个键
+if (mp.count(x)) // 此处判断是否存在x这个键
     cout << mp[x] << "\n"; // 只有存在才会索引对应的值，避免不存在x时多余空元素的创建
 ```
 
@@ -971,7 +973,7 @@ s.upper_bound(k) 返回大于k的第一个元素的迭代器
 迭代器访问
 
 ```cpp
-for (set<int>::iterator it = s.begin(); it++ s.end(); it++)
+for (set<int>::iterator it = s.begin(); it != s.end(); it++)
     cout << *it << " ";
 ```
 
@@ -991,10 +993,10 @@ for (auto i : s)
 cout << *s.rbegin() << endl;
 //第二种
 set<int>::iterator iter = s.end();
-iter++;
-cout << (*iter) // << endl; // //打印2;
+iter--;
+cout << (*iter) << endl; // 打印最后一个元素
 //第三种
-cout << *(s.end()) << endl;
+cout << *(--s.end()) << endl;
 ```
 
 ### 7.4 重载<运算符
@@ -1029,7 +1031,7 @@ for (auto i : s)
 方式三：初始化时使用匿名函数定义比较规则
 
 ```cpp
-set < int, function < bool(int, int) s([&](int i, int j){
+set<int, function<bool(int, int)>> s([&](int i, int j) {
     return i > j; // 从大到小
 });
 for (int i = 1; i < 10; i++)
@@ -1049,7 +1051,7 @@ struct Point {
     int x, y;
     bool operator <(const Point &p) const {
         //按照点的横坐标从小到大排序, 如果横坐标相同, 纵坐标从小到大
-        if (x p.x)
+        if (x == p.x)
             return y < p.y;
         return x < p.x;
     }
@@ -1057,7 +1059,7 @@ struct Point {
 set<Point> s;
 for (int i = 1; i < 5; i++) {
     int x, y;
-    cin >> x y;
+    cin >> x >> y;
     s.insert({x, y});
 }
 //输入
@@ -1106,7 +1108,7 @@ mp.insert({"xingmaqi", 1});
 //头文件
 #include<utility>
  >> 1.初始化定义
-pair < string, int > p("wangyaqi", 1) //; // 带初始值的
+pair < string, int > p("wangyaqi", 1); // 带初始值的
 pair < string, int > p; // 不带初始值的
 //2.赋值
 p = {"wang", 18};
@@ -1121,7 +1123,7 @@ p = pair < string, int>("wang", 18);
 pair < int, int > p[20];
 for (int i = 0; i < 20; i++) {
     //和结构体类似，first代表第一个元素，second代表第二个元素
-    cout << p[i].first << " " p[i].second;
+    cout << p[i].first << " " << p[i].second;
 }
 ```
 
@@ -1141,20 +1143,20 @@ string是一个字符串类，和 char型字符串类似。
  >> 1.
 string str1; // //生成空字符串
 2.
-string str2("123456789") //; // //生成"1234456789"的复制品
+string str2("123456789"); // 生成"123456789"的复制品
 3.
-string str3("12345", 0, 3) //; // 结果为"123" ，从0位置开始，长度为3
+string str3("12345", 0, 3); // 结果为"123" ，从0位置开始，长度为3
 4.
-string str4("123456", 5) //; // //结果为"12345" ，长度为5
+string str4("123456", 5); // 结果为"12345" ，长度为5
 ```
 
 <!-- Page 21 -->
 
 ```cpp
 5.
-string str5(5, '2') //; // //结果为"22222", 构造5个字符'2'连接而成的字符串
+string str5(5, '2'); // 结果为"22222", 构造5个字符'2'连接而成的字符串
 6.
-string str6(str2, 2) //; // //结果为"3456789"，截取第三个元素（2对应第三位）到最后
+string str6(str2, 2); // 结果为"3456789"，截取第三个元素（2对应第三位）到最后
 ```
 
 简单使用
@@ -1247,7 +1249,7 @@ getline(cin, s);
 int n;
 string s;
 cin >> n;
-getline(cin, s) //; // //此时读取相当于读取了前一个回车字符
+getline(cin, s); // 此时读取相当于读取了前一个回车字符
 ```
 
 正确读取：
@@ -1257,7 +1259,7 @@ int n;
 string s;
 cin >> n;
 getchar(); cin.get()
-getline(cin, s) //; // 可正确读入下一行的输入
+getline(cin, s); // 可正确读入下一行的输入
 ```
 
 cin与 cin.getline()混用
@@ -1361,8 +1363,8 @@ cout << "字符 'o' 出现 " << count2 << " 次" << endl; //使用 STL count 算
 
 ```cpp
 string s;
-transform(s.begin() //, s.end(), s.begin(), ::tolower); // 转换小写
-transform(s.begin() //, s.end(), s.begin(), ::toupper); // 转换大写
+transform(s.begin(), s.end(), s.begin(), ::tolower); // 转换小写
+transform(s.begin(), s.end(), s.begin(), ::toupper); // 转换大写
 ```
 
 分割
@@ -1397,22 +1399,22 @@ int main() {
     string s("dog bird chicken bird cat");
     //字符串查找找到后返回首字母在字符串中的下标
     //1. 查找一个字符串
-    cout << s.find("chicken") // << endl; // 结果是：9
+    cout << s.find("chicken") << endl; // 结果是：9
     //2. 从下标为6开始找字符'i'，返回找到的第一个i的下标
-    cout << s.find('i', 6) // << endl; // 结果是：11
+    cout << s.find('i', 6) << endl; // 结果是：11
     //3. 从字符串的末尾开始查找字符串，返回的还是首字母在字符串中的下标
-    cout << s.rfind("chicken") // << endl; // 结果是：9
+    cout << s.rfind("chicken") << endl; // 结果是：9
     //4. 从字符串的末尾开始查找字符
-    cout << s.rfind('i') // << endl; // 结果是：18因为是从末尾开始查找，所以返回第一次找到的字符
+    cout << s.rfind('i') << endl; // 结果是：18，因为是从末尾开始查找，所以返回第一次找到的字符
     //5. 在该字符串中查找第一个属于字符串s的字符
-    cout << s.find_first_of("13br98") // << endl; // 结果是：4b
+    cout << s.find_first_of("13br98") << endl; // 结果是：4
     //6. 在该字符串中查找第一个不属于字符串s的字符先匹配dog，然后bird匹配不到，所以打印4
-    cout << s.find_first_not_of("hello dog 2006") // << endl; // 结果是：4
-    cout << s.find_first_not_of("dog bird 2006") // << endl; // 结果是：9
+    cout << s.find_first_not_of("hello dog 2006") << endl; // 结果是：4
+    cout << s.find_first_not_of("dog bird 2006") << endl; // 结果是：9
     //7. 在该字符串最后中查找第一个属于字符串s的字符
-    cout << s.find_last_of("13r98") // << endl; // 结果是：19
+    cout << s.find_last_of("13r98") << endl; // 结果是：19
     //8. 在该字符串最后中查找第一个不属于字符串s的字符先匹配tac，然后空格匹配不到，所以打印21
-    cout << s.find_last_not_of("teac") // << endl; // 结果是：21
+    cout << s.find_last_not_of("teac") << endl; // 结果是：21
 }
 ```
 
@@ -1420,7 +1422,7 @@ int main() {
 排序
 
 ```cpp
-sort(s.begin() //, s.end()); // //按ASCII码排序
+sort(s.begin(), s.end()); // 按ASCII码排序
 ```
 
 ## 10 bitset
@@ -1452,11 +1454,11 @@ bitset 在 bitset 头文件中，它类似数组，并且每一个元素只能�
 using namespace std;
 int main() {
     bitset<4> bitset1; // //无参构造，长度为４，默认每一位为0
-    bitset<9> bitset2(12) //; // //长度为9，二进制保存，前面用0补充
+    bitset<9> bitset2(12); // 长度为9，二进制保存，前面用0补充
     string s = "100101";
-    bitset<10> bitset3(s) //; // //长度为10，前面用0补充
+    bitset<10> bitset3(s); // 长度为10，前面用0补充
     char s2[] = "10101";
-    bitset<13> bitset4(s2) //; // //长度为13，前面用0补充
+    bitset<13> bitset4(s2); // 长度为13，前面用0补充
     cout << bitset1 << endl; 0000
     cout << bitset2 << endl; 000001100
     cout << bitset3 << endl; 0000100101
@@ -1474,19 +1476,19 @@ bitset可以进行位操作
 ```cpp
 bitset<4> foo(string("1001"));
 bitset<4> bar(string("0011"));
-cout << (foo ^ = bar) // << endl; // 1010 (foo对bar按位异或后赋值给foo)
-cout << (foo & = bar) // << endl; // 0001 (按位与后赋值给foo)
-cout << (foo | = bar) // << endl; // 1011 (按位或后赋值给foo)
-cout << (foo <<= 2) // << endl; // 0100 (左移2位，低位补0，有自身赋值)
-cout << (foo >>= 1) // << endl; // 0100 (右移1位，高位补0，有自身赋值)
-cout << (~bar) // << endl; // 1100 (按位取反)
-cout << (bar << 1) // << endl; // 0110 (左移，不赋值)
-cout << (bar >> 1) // << endl; // 0001 (右移，不赋值)
-cout << (foo == bar) // << endl; // false(1001 == 0011为false)
-cout << (foo != bar) // << endl; // true(1001 == 0011为true)
-cout << (foo &bar) // << endl; // 0001 (按位与，不赋值)
-cout << (foo |bar) // << endl; // 1011 (按位或，不赋值)
-cout << (foo^bar) // << endl; // 1010 (按位异或，不赋值)
+cout << (foo ^= bar) << endl; // 1010 (foo对bar按位异或后赋值给foo)
+cout << (foo &= bar) << endl; // 0001 (按位与后赋值给foo)
+cout << (foo |= bar) << endl; // 1011 (按位或后赋值给foo)
+cout << (foo <<= 2) << endl; // 0100 (左移2位，低位补0，有自身赋值)
+cout << (foo >>= 1) << endl; // 0100 (右移1位，高位补0，有自身赋值)
+cout << (~bar) << endl; // 1100 (按位取反)
+cout << (bar << 1) << endl; // 0110 (左移，不赋值)
+cout << (bar >> 1) << endl; // 0001 (右移，不赋值)
+cout << (foo == bar) << endl; // false(1001 == 0011为false)
+cout << (foo != bar) << endl; // true(1001 == 0011为true)
+cout << (foo & bar) << endl; // 0001 (按位与，不赋值)
+cout << (foo | bar) << endl; // 1011 (按位或，不赋值)
+cout << (foo ^ bar) << endl; // 1010 (按位异或，不赋值)
 ```
 
 访问
@@ -1494,7 +1496,7 @@ cout << (foo^bar) // << endl; // 1010 (按位异或，不赋值)
 ```cpp
 //可以通过 [] 访问元素(类似数组) // ，注意最低位下标为0，类似于数的二进制表示，如下：
 bitset<4> f("1011");
-for (int i = 0; i < 4; i) {
+for (int i = 0; i < 4; i++) {
     cout << f[i];
 } 输出1101
 ```
@@ -1529,11 +1531,14 @@ bitset还有开动态空间的技巧，bitset常用在 01背包 优化等算法�
 ```cpp
 //动态长度bitset实现
 const int N = 1e6 + 5; // 开空间的上限，一般为数据范围附近的值
-template < int len = 1>
-void bitset_(int sz) // {sz即为想要开的大小
-if (len < sz) {bitset_ < min(len * 2, N)>(sz); return;}
-bitset<len + 1> dp;
-//具体算法的实现
+template <int len = 1>
+void bitset_(int sz) { // sz即为想要开的大小
+    if (len < sz) {
+        bitset_<min(len * 2, N)>(sz);
+        return;
+    }
+    bitset<len + 1> dp;
+    // 具体算法的实现
 }
 ```
 
@@ -1676,7 +1681,7 @@ back() 返回容器中最后一个元素的直接引用，函数不适用于空�
 
 data() 返回一个指向容器首个元素的指针。利用该指针，可实现复制容器中所有元素等类似功能
 
-fll(x) 将 x 这个值赋值给容器中的每个元素,相当于初始化
+fill(x) 将 x 这个值赋值给容器中的每个元素,相当于初始化
 
 array1.swap(array2) 交换 array1 和 array2 容器中的所有元素，但前提是它们具有相同的长度和类型
 
@@ -1698,18 +1703,18 @@ int res = a.at(1) + a.at(2);
 cout << res << "\n";
 ```
 
-fll()
+fill()
 
-array的 fll() 函数，将 a数组全部元素值变为 x
+array的 fill() 函数，将 a数组全部元素值变为 x
 
 ```cpp
-a.fll(x);
+a.fill(x);
 ```
 
-另外还有其它的 fll() 函数:将 a数组 全部值变为 x
+另外还有其它的 fill() 函数:将 a数组 全部值变为 x
 
 ```cpp
-fll(a.begin(), a.end(), x);
+fill(a.begin(), a.end(), x);
 ```
 
 get方法获取元素值
@@ -1792,7 +1797,7 @@ get < 0>(t) = 1;
 
 ```cpp
 tuple < int, int, int > t(1, 2, 3);
-cout << tuple_size < decltype(t) > value << "\n"; 3
+cout << tuple_size<decltype(t)>::value << "\n"; // 3
 ```
 
 获取对应元素的值
@@ -1801,9 +1806,9 @@ cout << tuple_size < decltype(t) > value << "\n"; 3
 
 ```cpp
 tuple < int, int, int > t(1, 2, 3);
-cout << get < 0>(t) '\n'; 1
-cout << get < 1>(t) '\n'; 2
-cout << get < 2>(t) '\n'; 3
+cout << get<0>(t) << '\n'; // 1
+cout << get<1>(t) << '\n'; // 2
+cout << get<2>(t) << '\n'; // 3
 ```
 
 通过 tie解包 获取元素值
@@ -1815,7 +1820,7 @@ int one, three;
 string two;
 tuple < int, string, int > t(1, "hahaha", 3);
 tie(one, two, three) = t;
-cout << one two three << "\n"; 1hahaha3
+cout << one << two << three << "\n"; // 1hahaha3
 ```
 
 ## STL函数
@@ -1854,7 +1859,7 @@ typedef long long ll;
 struct node {
     ll num;
 } st[10];
-for (int i = 1; i n; i++)
+for (int i = 1; i <= 3; i++)
     st[i].num = i + 10000000000;
 //返回值类型与init一致，同时注意参数类型（a）也要一样
 //初始值为1，累加1+10000000001+10000000002+10000000003 = 30000000007
@@ -1897,7 +1902,7 @@ cout << a << "\n";
 ### fill
 
 ```cpp
-fll(beg, end, num)
+fill(beg, end, num)
 ```
 
 复杂度：O(N)
@@ -1907,7 +1912,7 @@ fll(beg, end, num)
 ```cpp
 //对a数组的所有元素赋1
 int a[5];
-fll(a, a + 5, 1);
+fill(a, a + 5, 1);
 for (int i = 0; i < 5; i++)
     cout << a[i] << " ";
  >> 1 1 1 1 1
@@ -1917,7 +1922,7 @@ for (int i = 0; i < 5; i++)
 
 memset()是按字节进行赋值，对于初始化赋 0或 -1有比较好的效果.
 
-如果赋某个特定的数会出错，赋值特定的数建议使用 fll()
+如果赋某个特定的数会出错，赋值特定的数建议使用 fill()
 
 ### is_sorted
 
@@ -2023,8 +2028,8 @@ minmax_element(beg, end)
 int n = 10;
 vector<int> a(n);
 iota(a.begin(), a.end(), 1);
-auto t = minmax_element(a.begin() //, a.end()); // 返回的是最小值和最大值对应的地址
-t.first = 1, t.second = 10 输出对应最小最大值时需要使用指针
+auto t = minmax_element(a.begin(), a.end()); // 返回的是最小值和最大值对应的地址
+cout << *t.first << " " << *t.second << "\n"; // 1 10，输出对应最小最大值时需要使用*
 ```
 
 ### nth_element
@@ -2045,7 +2050,7 @@ nth为一个迭代器，指向序列中的一个元素。第n小的值恰好在 
 
 ```cpp
 nth_element(a, a + 2, a + n);
-cout << a[2] '\n';
+cout << a[2] << '\n';
 ```
 
 ### next_permutation
@@ -2106,7 +2111,7 @@ partial_sort(beg, mid, end)
 int a[] = {1, 2, 5, 4, 7, 9, 8, 10, 6, 3};
 partial_sort(a, a + 5, a + 10);
 for (int i = 0; i < 10; i++)
-    cout << a[i] ' ';
+    cout << a[i] << ' ';
  >> 1 2 3 4 5 9 8 10 7 6
 //前五个元素都有序
 ```
@@ -2121,9 +2126,9 @@ partial_sort(beg,mid,end,cmp)
 
 ```cpp
 int a[] = {1, 2, 5, 4, 7, 9, 8, 10, 6, 3};
-partial_sort(a, a + 5, a + 10, greater < int>());
+partial_sort(a, a + 5, a + 10, greater<int>());
 for (int i = 0; i < 10; i++)
-    cout << a[i] ' ';
+    cout << a[i] << ' ';
  >> 10 9 8 7 6 1 2 4 5 3
 //前五个元素降序有序
 ```
@@ -2138,11 +2143,12 @@ for (int i = 0; i < 10; i++)
 
 ```cpp
 vector<int> b(n);
-iota(b.begin() //, b.end(), 1); // 序列b递增赋值 1, 2, 3, 4,
+iota(b.begin(), b.end(), 1); // 序列b递增赋值 1, 2, 3, 4,
 //对a数组随机重排
 random_shuffle(a, a + n);
 //C++11之后尽量使用shuffle
-shuffle(b.begin(), b.end());
+mt19937 rng(random_device{}());
+shuffle(b.begin(), b.end(), rng);
 ```
 
 ### reverse
@@ -2157,12 +2163,12 @@ reverse(beg, end)
 
 ```cpp
 string s = "abcde";
-reverse(s.begin() //, s.end()); // 对s进行翻转
-cout << s '\n';edcba
+reverse(s.begin(), s.end()); // 对s进行翻转
+cout << s << '\n'; // edcba
 //对a数组进行翻转
 int a[] = {1, 2, 3, 4};
 reverse(a, a + 4);
-cout << a[0] a[1] a[2] a[3];4321
+cout << a[0] << a[1] << a[2] << a[3]; // 4321
 ```
 
 ### set_union, set_intersection,set_difference
@@ -2211,7 +2217,7 @@ sort(beg, end, cmp);
 int a[N]; // 普通数组定义
 对 a 数组的[1, n]位置进行从小到大排序
 sort(a + 1, a + 1 + n);
-vector<int> b(n + 1) //; // vector数组定义
+vector<int> b(n + 1); // vector数组定义
 sort(b.begin() + 1, b.end());
 ```
 
@@ -2219,19 +2225,19 @@ sort(b.begin() + 1, b.end());
 
 ```cpp
 //对a数组的[0, n-1]位置从大到小排序
-sort(a, a + n, greater < int>());
+sort(a, a + n, greater<int>());
 //对a数组的[0, n-1]位置从小到大排序
-sort(a, a + n, less < int>());
+sort(a, a + n, less<int>());
 vector<int> b(n + 1);
-sort(b.begin() // + 1, b.end()); // 升序
-sort(b.begin() // + 1, b.end(), greater < int>()); // 降序
+sort(b.begin() + 1, b.end()); // 升序
+sort(b.begin() + 1, b.end(), greater<int>()); // 降序
 ```
 
 - 操作三：另外一种降序排序方法，针对 vector
 
 ```cpp
 vector<int> a(n);
-sort(a.rbegin() //, a.rend()); // 使用反向迭代器进行降序排序
+sort(a.rbegin(), a.rend()); // 使用反向迭代器进行降序排序
 ```
 
 - 操作四：自定义排序规则
@@ -2244,7 +2250,7 @@ bool cmp(node a, node b) {
     //按结构体里面的x值降序排列
     return a.x > b.x;
 }
-sort(node, node + n, cmp) //; // 只能接受以函数为形式的自定义排序规则，无法接受以结构体为形式的自定义排序规则
+sort(node, node + n, cmp); // 只能接受以函数为形式的自定义排序规则，无法接受以结构体为形式的自定义排序规则
 //2. 或者使用匿名函数自定义排序规则
 sort(node, node + n, [](node a, node b) {
     return a.x > b.x;
@@ -2264,7 +2270,7 @@ sort(node, node + n, [](node a, node b) {
 ### stoi
 
 ```cpp
-stoi(const string*)
+stoi(const string&)
 ```
 
 将对应string类型字符串转换为数字，记忆： s t 分别对应两个数据类型的某个字母
@@ -2277,7 +2283,7 @@ atoi不做范围检查，如果超出上界，输出上界，超出下界，输�
 
 ```cpp
 string s = "1234";
-int a = atoi(s);
+int a = stoi(s);
 cout << a << "\n"; 1234
 ```
 
@@ -2308,7 +2314,7 @@ transform(beg, end, dest, toupper);
 
 ```cpp
 int a = 12345678;
-cout << to_string(a) '\n';
+cout << to_string(a) << '\n';
 ```
 
 ### unique
@@ -2338,12 +2344,12 @@ for (int i = 0; i < n; i++) {
     b[i] = a[i]; // 将a数组复制到b数组
 }
 排序后 b：{1, 2, 3, 3, 6}
-sort(b, b + n) //; // 对b数组排序
+sort(b, b + n); // 对b数组排序
 消除重复元素b：{1, 2, 3, 6, 3} 返回的地址为最后一个元素3的地址
-int len = unique(b, b + n) // - b; // 消除 b 的重复元素，并获取长度
+int len = unique(b, b + n) - b; // 消除 b 的重复元素，并获取长度
 for (int i = 0; i < n; i++) {
     //因为b有序，查找到的下标就是对应的 相对大小（离散化后的值）
-    int pos = lower_bound(b, b + len, a[i]) // - b; // 在b数组中二分查找第一个大于等于a[i]的下标
+    int pos = lower_bound(b, b + len, a[i]) - b; // 在b数组中二分查找第一个大于等于a[i]的下标
     a[i] = pos; // 离散化赋值
 }
 ```
@@ -2354,43 +2360,43 @@ for (int i = 0; i < n; i++) {
 
 ```cpp
 vector<int> a(n);
-for (int i = 0; i < n; i) {
+for (int i = 0; i < n; i++) {
     cin >> a[i];
 }
 vector<int> b = a;
 sort(b.begin(), b.end());
 b.erase(unique(b.begin(), b.end()), b.end());
-for (int i = 0; i < n; i) {
-    a[i] = lower_bound(b.begin() //, b.end(), a[i]) - b.begin() + 1; // 离散后的数据从1开始
+for (int i = 0; i < n; i++) {
+    a[i] = lower_bound(b.begin(), b.end(), a[i]) - b.begin() + 1; // 离散后的数据从1开始
 }
 ```
 
 ### __gcd
 
 ```cpp
-gcd(a, b)
+__gcd(a, b)
 ```
 
 求a和b的最大公约数
 
-gcd(12,15) = 3
+__gcd(12,15) = 3
 
-gcd(21,0) = 21
+__gcd(21,0) = 21
 
 ### __lg
 
 ```cpp
-lg(a)
+__lg(a)
 ```
 1. 求一个数二进制下最高位位于第几位（从第0位  开始）（或二进制数下有几位）
-2.  lg(x)  相当于返回$\lfloor x \rfloor$
+2. `__lg(x)` 相当于返回 $\lfloor \log_2 x \rfloor$
 3. 复杂度O(1)
 
-lg(8) = 3
+__lg(8) = 3
 
-lg(15) = 3
+__lg(15) = 3
 
-### _builtin 内置位运算函数
+### __builtin 内置位运算函数
 
 需要注意：内置函数有相应的 unsigned lnt和 unsigned long long版本， unsigned long long只需要在函数名后面加
 上 ll就可以了，比如 __builtin_clzll(x) ，默认是32位 unsigned int
@@ -2431,7 +2437,7 @@ __builtin_clz(x)
 x前导 0的个数（ count leading zero）
 
 ```cpp
-cout << __builtin_clz(32); 26
+cout << __builtin_clz(32); // 26
 //因为共有6位, 默认数据范围为32位，32 - 6 = 26
 ```
 
