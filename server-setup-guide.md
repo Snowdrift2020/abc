@@ -8,8 +8,7 @@
 ## 目录
 
 - [一、工作目录规划与配置](#一工作目录规划与配置)
-- [二、Claude Code 用户级安装](#二claude-code-用户级安装)
-- [三、常用 Linux 命令详解](#三常用-linux-命令详解)
+- [二、常用 Linux 命令详解](#三常用-linux-命令详解)
 - [附录:本次配置一次性命令包](#附录本次配置一次性命令包)
 
 ---
@@ -60,7 +59,7 @@ source ~/.bashrc
 验证:
 
 ```bash
-pwd                                        # 应显示 /home/liuxiaolong/work
+pwd                                        # 应显示 /home/xxx/work
 echo $PATH | tr ':' '\n' | grep scripts    # 应能看到 work/scripts
 ```
 
@@ -73,74 +72,8 @@ echo $PATH | tr ':' '\n' | grep scripts    # 应能看到 work/scripts
 
 ---
 
-## 二、Claude Code 用户级安装
 
-> 推荐方式:**用户级 npm 前缀**,避免 sudo 权限污染、避免缓存属主混乱。
-
-### 2.1 (可选) 先卸载全局版本
-
-如果之前已经用 `sudo npm install -g` 装过:
-
-```bash
-sudo npm uninstall -g @anthropic-ai/claude-code
-which claude          # 应无输出
-```
-
-### 2.2 配置 npm 用户级前缀
-
-```bash
-mkdir -p ~/.npm-global
-npm config set prefix ~/.npm-global
-echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
-```
-
-执行后:
-
-- 全局 npm 包将装到 `~/.npm-global/lib/node_modules/`
-- 可执行命令链接放在 `~/.npm-global/bin/`(已加入 PATH)
-- **以后所有 `npm install -g` 都不再需要 sudo**
-
-### 2.3 安装 Claude Code
-
-```bash
-npm install -g @anthropic-ai/claude-code
-```
-
-### 2.4 验证与启动
-
-```bash
-which claude            # 应显示 ~/.npm-global/bin/claude
-claude --version        # 显示版本号
-claude                  # 启动,首次会引导登录
-```
-
-### 2.5 用户配置位置
-
-Claude Code 运行时数据(与安装位置分离):
-
-| 内容 | 路径 |
-|---|---|
-| 配置 / 登录态 | `~/.claude/` |
-| 项目级会话历史 | `~/.claude/projects/` |
-| 全局设置 | `~/.claude/settings.json` |
-
-**备份这一个目录就保留所有用户态**,换机器/重装直接拷贝过去即可。
-
-### 2.6 常见问题
-
-**Q: `EACCES: permission denied`(`/usr/lib/node_modules`)**
-A: 你还在用系统级 npm 前缀。执行 2.2 节配置用户级前缀。
-
-**Q: `command not found: claude`**
-A: 检查 `echo $PATH` 是否包含 `~/.npm-global/bin`,没有就 `source ~/.bashrc`。
-
-**Q: 旧的全局 npm 缓存属主是 root**
-A: `sudo chown -R $(whoami) ~/.npm` 改回。
-
----
-
-## 三、常用 Linux 命令详解
+## 二、常用 Linux 命令详解
 
 > 格式:命令 — 功能 — 常用参数 — 实例
 
@@ -177,7 +110,7 @@ cd /                     # 根目录
 
 #### `pwd` — 显示当前路径
 ```bash
-pwd                      # /home/liuxiaolong/work
+pwd                      # /home/xxx/work
 pwd -P                   # 解析所有软链接,显示真实路径
 ```
 
@@ -433,7 +366,7 @@ chmod -R 755 dir/                     # 递归
 
 ```bash
 sudo chown user:group file
-sudo chown -R liuxiaolong:liuxiaolong ~/work
+sudo chown -R xxx:xxx ~/work
 sudo chgrp developers project/
 ```
 
@@ -583,7 +516,7 @@ unzip archive.zip -d /tmp/                     # 解到指定目录
 ps aux                                          # BSD 风格,看所有进程
 ps -ef                                          # System V 风格
 ps aux | grep nginx                             # 配合 grep 查特定进程
-ps -u liuxiaolong                               # 某用户的进程
+ps -u xxx                               # 某用户的进程
 ps --forest                                     # 树状显示
 ```
 
@@ -601,7 +534,7 @@ kill 1234                                       # 默认 SIGTERM(15),优雅退�
 kill -9 1234                                    # SIGKILL(9),强杀
 kill -l                                         # 列出所有信号
 killall nginx                                   # 按名字杀
-killall -9 -u liuxiaolong                       # 杀某用户所有进程
+killall -9 -u xxx                       # 杀某用户所有进程
 pkill -f "python myscript"                      # 按命令行匹配
 ```
 
@@ -702,7 +635,7 @@ ssh -L 8080:localhost:80 user@host              # 把远程 80 映射到本地 8
 ```
 Host eda
   HostName 192.168.1.10
-  User liuxiaolong
+  User xxx
   Port 22
   IdentityFile ~/.ssh/id_rsa
 ```
