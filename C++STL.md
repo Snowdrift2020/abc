@@ -263,6 +263,9 @@ v[2].push_back(3);
 ```cpp
 //初始化二维均可变长数组
 vector<vector<int>> v; // 定义一个行和列均可变的二维数组
+//行数列数
+int rows = v.size();
+int cols = (rows > 0) ? v[0].size() : 0;
 ```
 
 应用：可以在 v数组里面装多个数组
