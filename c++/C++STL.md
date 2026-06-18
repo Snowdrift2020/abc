@@ -808,7 +808,7 @@ map特性：map会按照键的顺序从小到大自动排序，键的类型必�
 
 | 代码 | 含义 |
 |---|---|
-| `mp.find(key)` | 返回键为key的映射的迭代器 注意：用find函数来定位数据出现位置，它返回一个迭代<br>器。当数据存在时，返回数据所在位置的迭代器，数据不存在时，返回 |
+| `mp.find(key)` | 返回键为key的映射的迭代器 注意：用find函数来定位数据出现位置，它返回一个迭代<br>器。当数据存在时，返回数据所在位置的迭代器，数据不存在时，返回 mp.end()|
 | `mp.erase(it)` | 删除迭代器对应的键和值 |
 | `mp.erase(key)` | 根据映射的键删除键和值 |
 | `mp.erase(first,last)` | 删除左闭右开区间迭代器对应的键和值 |
@@ -899,9 +899,9 @@ using namespace std;
 int main() {
     map<int, int> m{{1, 2}, {2, 2}, {1, 2}, {8, 2}, {6, 2}}; // //有序
     map<int, int>::iterator it1 = m.lower_bound(2);
-    cout << it1 first << "\n";it1first = 2
+    cout << it1->first << "\n";it1->first = 2
     map<int, int>::iterator it2 = m.upper_bound(2);
-    cout << it2 first << "\n";it2first = 6
+    cout << it2->first << "\n";it2->first = 6
     return 0;
 }
 ```
